@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raja Aryan Sahab — Birthday Surprise</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#080611;color:#fff7fb;font-family:Georgia,serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0,#34203f 0,transparent 45%),radial-gradient(circle at 20% 80%,#241331 0,transparent 35%);z-index:-2}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}.star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:tw 2s infinite}
+@keyframes tw{50%{opacity:.15;transform:scale(.5)}}@keyframes float{50%{transform:translateY(-8px)}}
+section{min-height:100vh;padding:55px 15px;display:flex;align-items:center;justify-content:center}.wrap{width:min(1000px,100%);text-align:center}
+.card{background:#ffffff09;border:1px solid #ffffff1d;border-radius:28px;padding:28px;box-shadow:0 20px 70px #0009;backdrop-filter:blur(10px)}
+h1{font-size:clamp(42px,8vw,76px);margin:10px 0}h2{font-size:clamp(30px,6vw,50px);margin:10px 0}
+p{font-family:Arial,sans-serif;line-height:1.8;color:#d9cddc}.kicker{font:12px Arial;color:#ffb8d6;letter-spacing:3px;text-transform:uppercase}
+.btn{border:0;border-radius:30px;padding:13px 22px;margin:7px;background:linear-gradient(135deg,#ffb8d6,#ffe2a6);font-weight:bold;color:#261523;cursor:pointer}.alt{background:#ffffff12;color:#fff;border:1px solid #ffffff22}
+.hidden{display:none!important}.music{position:fixed;right:15px;top:15px;z-index:10;border:1px solid #ffffff22;background:#171222;color:#fff;border-radius:50%;width:48px;height:48px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:650px;margin:25px auto}.day,.date{padding:12px 4px;border-radius:12px;background:#ffffff08;font-family:Arial}.day{font-size:11px;color:#cdb8cd}.date{cursor:pointer;min-height:52px;display:flex;align-items:center;justify-content:center}.special{background:#ffb8d633!important;box-shadow:0 0 25px #ffb8d633;border:1px solid #ffb8d677}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:15px;margin:25px 0}.item{min-height:145px;border:1px solid #ffffff1c;border-radius:22px;background:#ffffff08;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px;cursor:pointer;transition:.2s}.item:hover{transform:translateY(-5px);background:#ffffff12}.item span{font-size:55px}.message{max-width:760px;margin:18px auto;padding:17px;border-radius:20px;background:#ffffff08;border:1px solid #ffffff15;font-family:Arial;line-height:1.7}.selected{border-color:#ffe2a6!important;box-shadow:0 0 30px #ffe2a633}.stage{font-size:115px;animation:float 2s infinite}.cut{animation:cut 1s forwards}@keyframes cut{50%{transform:scale(1.1) rotate(-5deg)}100%{transform:scale(.7);opacity:.35}}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}.photo{background:#fff;color:#312431;padding:10px 10px 16px;box-shadow:0 15px 35px #0009}.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee}.photo p{color:#443544;font-size:13px;margin:10px 5px}
+.envelope,.cat{font-size:100px;animation:float 2s infinite;cursor:pointer}.letter{min-height:180px;display:flex;align-items:center;justify-content:center}.gift.open{border-color:#ffb8d6;box-shadow:0 0 25px #ffb8d633}
+.final{font-size:clamp(25px,5vw,45px);color:#ffe5f1;text-shadow:0 0 25px #ffb8d677}
+footer{text-align:center;padding:30px;color:#88798b;font:12px Arial}
+@media(max-width:600px){.card{padding:20px}.calendar{gap:3px}.date,.day{padding:8px 2px}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<audio id="music" src="music.mp3" loop></audio>
+<button class="music" id="musicBtn" onclick="toggleMusic()">🔇</button>
+
+<section id="start"><div class="wrap card">
+<div class="kicker">Ek chota sa surprise ✨</div>
+<h1>Raja Aryan Sahab</h1>
+<p>Jaldi jaldi kuch bhi open nahi karna 👀<br>Har cheez araam se dekhni hai, kyun ke ye sab specially aap ke liye hai. 🤍</p>
+<button class="btn" onclick="startSurprise()">Start Surprise 🎶</button>
+</div></section>
+
+<section id="calendar" class="hidden"><div class="wrap">
+<div class="kicker">Pehla surprise</div><h2>Ek date jo bohat special hai ✨</h2>
+<p>7 November ko dhoondo 👀</p><div class="calendar" id="calendarBox"></div><div id="calendarMsg"></div>
+<button class="btn hidden" id="calendarNext" onclick="show('balloons')">Agay chalo 🌸</button>
+</div></section>
+
+<section id="balloons" class="hidden"><div class="wrap">
+<div class="kicker">Balloon challenge 🎈</div><h2>Saare balloons pop karo</h2>
+<p>Har balloon ke andar ek choti si dua hai.</p><div class="grid" id="balloonsBox"></div><div id="balloonMsg"></div>
+<button class="btn hidden" id="balloonNext" onclick="show('cake')">Cake choose karo 🎂</button>
+</div></section>
+
+<section id="cake" class="hidden"><div class="wrap">
+<div class="kicker">Birthday cake 🎂</div><h2>Apna cake khud choose karo 👀</h2>
+<p>Jo flavour pasand aaye usay select karo.</p><div class="grid" id="cakeBox"></div><div id="cakeMsg"></div>
+<button class="btn hidden" id="cakeConfirm" onclick="showCut()">Haan, yehi cake chahiye 🎂</button>
+</div></section>
+
+<section id="cut" class="hidden"><div class="wrap card">
+<div class="kicker">Cake cutting</div><h2 id="chosen"></h2><div class="stage" id="cakeStage">🎂</div>
+<p>Ab cake cut karne ka time hai 😭🎂</p><button class="btn" id="cutBtn" onclick="cutCake()">Cake Cut Karo 🔪</button><div id="cutMsg"></div>
+<button class="btn hidden" id="candlesNext" onclick="show('candles')">Candles 🕯️</button>
+</div></section>
+
+<section id="candles" class="hidden"><div class="wrap card">
+<div class="kicker">Ek wish ✨</div><h2>Aankhein band karo...</h2><div style="font-size:65px" id="candlesVisual">🕯️🕯️🕯️🕯️🕯️</div>
+<p>Ek achi si wish maango aur phir button dabana. 🤍</p><button class="btn" onclick="blow()">Wish kar li? 🤍</button><div id="wishMsg"></div>
+<button class="btn hidden" id="photosNext" onclick="show('photos')">Memories 📸</button>
+</div></section>
+
+<section id="photos" class="hidden"><div class="wrap">
+<div class="kicker">Kuch tasveerain 📸</div><h2>Har tasveer ke peeche ek dua</h2>
+<p>GitHub mein apni photos ko <b>photo1.jpg</b>, <b>photo2.jpg</b>, <b>photo3.jpg</b> naam dena.</p>
+<div class="photos">
+<div class="photo"><img src="photo1.jpg"><p>Allah bas itna sa karam kar de ke jis tarah ye tasveer mein hum saath hain, waise hi haqeeqat mein bhi humein bohat jald saath kar de. 🤲🤍</p></div>
+<div class="photo"><img src="photo2.jpg"><p>Allah hum dono ke naseeb mein ek doosre ko likh de, jo jo humne saath socha hai usay khoobsurat tareeqe se poora kar de. Ameen. ✨</p></div>
+<div class="photo"><img src="photo3.jpg"><p>Allah aap ke saare khwab poore kare, aap ki har mehnat ko kamyabi de, aur jo humare liye behtar ho usay khoobsurat tareeqe se naseeb kare. 🤍</p></div>
+</div>
+<div class="message">Kuch tasveerain sirf yaadein nahi hoti... kuch tasveeron ke peeche bohat si duaein hoti hain. 🤍</div>
+<button class="btn" onclick="show('letter')">Ek letter 💌</button>
+</div></section>
+
+<section id="letter" class="hidden"><div class="wrap card">
+<div class="kicker">Ek khat 💌</div><div class="envelope" onclick="openLetter()">💌</div><p id="envText">Envelope par click karo...</p>
+<div id="letterBox" class="hidden"><h2 id="letterTitle"></h2><div class="letter"><p id="letterText"></p></div><button class="btn" onclick="nextLetter()">Agla page 🌸</button></div>
+<div id="letterDone" class="hidden"><button class="btn" onclick="show('gift')">Ab gift 🎁</button></div>
+</div></section>
+
+<section id="gift" class="hidden"><div class="wrap">
+<div class="kicker">Ek cute sa gift 🎁</div><div class="cat">🐱🌷</div><h2>Please accept the gift 🎁</h2>
+<p>Ek choti si cat flowers le kar khari hai... ab faisla aap ka hai 👀</p>
+<button class="btn" onclick="acceptGift()">Yes, I accept 🌸</button><button class="btn alt" onclick="noGift()">No 😶</button>
+<div id="giftMsg"></div><div class="grid hidden" id="giftBox"></div><button class="btn hidden" id="finalNext" onclick="show('final')">Last surprise ✨</button>
+</div></section>
+
+<section id="final" class="hidden"><div class="wrap card">
+<div class="kicker">Bas ek last baat 🤍</div><div class="final">Best Wishes ✨</div><h2>Raja Aryan Sahab</h2>
+<p>Allah aap ko zindagi ki har khushi de, aap ki har achi aur dil se nikli hui dua qabool kare, aap ke kaam mein kamyabi de, aap ka future secure kare aur aap ke saare dreams aur wishes poore kare.</p>
+<p>Allah aap ko seedhi aur achi raah par rakhe, har buri aur ghalat cheez se mehfooz rakhe, har mushkil asaan kare aur aap ko hamesha khush, muskurata aur sukoon mein rakhe. Ameen. 🤲🤍</p>
+<div class="final">Happy Birthday 🎂✨</div>
+</div></section>
+<footer>Made specially for a birthday surprise ✨</footer>
+
+<script>
+const $=x=>document.getElementById(x);
+function show(id){document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));$(id).classList.remove("hidden");scrollTo({top:0,behavior:"smooth"})}
+const music=$("music");
+function startSurprise(){music.play().then(()=>{$("musicBtn").textContent="🔊"}).catch(()=>{});show("calendar")}
+function toggleMusic(){if(music.paused){music.play();$("musicBtn").textContent="🔊"}else{music.pause();$("musicBtn").textContent="🔇"}}
+for(let i=0;i<100;i++){let s=document.createElement("i");s.className="star";s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=Math.random()*3+"s";$("stars").appendChild(s)}
+
+["Ha","Ju","Ma","Bu","Ju","Vi","Sh"].forEach(x=>{let e=document.createElement("div");e.className="day";e.textContent=x;$("calendarBox").appendChild(e)});
+for(let d=1;d<=30;d++){let e=document.createElement("div");e.className="date"+(d===7?" special":"");e.textContent=d===7?"🎂 7":d;e.onclick=()=>{if(d===7){$("calendarMsg").innerHTML='<div class="message">Aaj ka din sirf is liye special nahi ke aaj aap ka birthday hai... balkay is liye bhi ke isi din Allah ne duniya ko ek bohat pyara insan diya. 🤍<br><br><b>7 November — aap ka special day ✨</b></div>';$("calendarNext").classList.remove("hidden")}else{$("calendarMsg").innerHTML='<div class="message">Hmm... 7 November ko try karo 👀</div>'}};$("calendarBox").appendChild(e)}
+
+let balloons=["Allah aap ko hamesha khush rakhe 🤍","Aap ki har achi dua qabool ho ✨","Aap ke saare dreams aur wishes poore hon 🌸","Hamesha aise hi muskurate rahain 🫶","Aap ka future bohat khoobsurat ho 🤲","Aap ke har kaam mein kamyabi ho ✨","Allah aap ko sukoon aur barkat de 🤍","Har mushkil aap ke liye asaan ho 🌷","Aap ki mehnat rang laaye 🌟","Allah aap ko buri cheezon se mehfooz rakhe 🤲","Aap ki zindagi khushiyon se bhari rahe 🎈","Aap ke liye hamesha behtareen raste khulen ✨"],popped=0;
+balloons.forEach(t=>{let e=document.createElement("div");e.className="item";e.innerHTML="<span>🎈</span><small>Pop me 👀</small>";e.onclick=()=>{if(e.dataset.done)return;e.dataset.done=1;e.innerHTML="<p>"+t+"</p>";e.style.opacity=".6";popped++;$("balloonMsg").innerHTML='<div class="message">'+t+"</div>";if(popped===balloons.length){$("balloonNext").classList.remove("hidden");$("balloonMsg").innerHTML+='<div class="message">Ohooo... saare balloons bhi khatam kar diye 😂 Ab cake ki baari! 🎂</div>'}};$("balloonsBox").appendChild(e)});
+
+let cakeData=[["🍫","Chocolate Cake"],["🍓","Strawberry Cake"],["🍦","Vanilla Cake"],["🫐","Blueberry Cake"],["❤️","Red Velvet"],["🍯","Caramel Cake"]],chosen="";
+cakeData.forEach(([i,n])=>{let e=document.createElement("div");e.className="item";e.innerHTML="<span>"+i+"</span><b>"+n+"</b>";e.onclick=()=>{document.querySelectorAll("#cakeBox .item").forEach(x=>x.classList.remove("selected"));e.classList.add("selected");chosen=n;$("cakeMsg").innerHTML='<div class="message">'+n+" select ho gaya 👀🎂</div>";$("cakeConfirm").classList.remove("hidden")};$("cakeBox").appendChild(e)});
+function showCut(){show("cut");$("chosen").textContent=chosen+" ready hai 🎂"}
+function cutCake(){$("cakeStage").classList.add("cut");$("cutBtn").disabled=true;$("cutMsg").innerHTML='<div class="message">Yayyyy! '+chosen+' cut ho gaya 😭🎂</div>';$("candlesNext").classList.remove("hidden")}
+function blow(){$("candlesVisual").textContent="✨🌟✨🌟✨";$("wishMsg").innerHTML='<div class="message">Allah aap ki woh wish bhi qabool kare jo aap ne kisi ko batayi bhi nahi. 🤲🤍</div>';$("photosNext").classList.remove("hidden")}
+
+let pages=[["Page 01 — Aap ki nature 🌷","Aap ki nature bohat achi hai. Aap bohat jolly aur understanding hain, aur har baat ko pyaar se sun kar achay tareeqe se jawab dena aap ki bohat achi baaton mein se ek hai."],["Page 02 — Aap ki understanding 🤍","Aap jis tarah har baat ko calmly samajhte aur handle karte hain, woh genuinely bohat achi quality hai."],["Page 03 — Kuch dil ki baatein 💌","Allah aap ko zindagi ki har khushi de, aap ki har achi dua qabool kare aur aap ke liye har mushkil asaan kare."],["Page 04 — Aap ke dreams ✨","Allah aap ke saare dreams aur wishes poore kare, aap ke kaam mein kamyabi de aur aap ka future secure aur bright kare."],["Page 05 — Meri dua aap ke liye 🤲","Allah aap ko seedhi aur achi raah par rakhe, har buri cheez se bachaye aur aap ko sehat, sukoon, barkat aur khushiyan de. Ameen. 🤍"]],lp=0;
+function openLetter(){$("envText").textContent="";$("letterBox").classList.remove("hidden");renderLetter()}
+function renderLetter(){$("letterTitle").textContent=pages[lp][0];$("letterText").textContent=pages[lp][1]}
+function nextLetter(){lp++;if(lp<pages.length)renderLetter();else{$("letterBox").classList.add("hidden");$("letterDone").classList.remove("hidden");$("envText").textContent="Letter complete ho gaya 💌"}}
+function noGift(){$("giftMsg").innerHTML='<div class="message">Soch lo... itni pyari si cat flowers le kar khari hai 🥺🌷<br>Dobara socho 👀</div>'}
+function acceptGift(){
+$("giftMsg").innerHTML='<div class="message">Yayyy! Gift accept ho gaya 🎁🤍 Ab boxes ek ek karke kholo.</div>';$("giftBox").classList.remove("hidden");$("finalNext").classList.remove("hidden");
+let gifts=[["🧸","Teddy Bear","Ye lo ek chota sa teddy... gift mein kuch cute sa bhi hona chahiye na 😂🤍"],["🐱🐭","BCA — We are Tom & Jerry","Har waqt larna, aik doosre ki tang kheenchna, phir thori der baad normal ho jana 😂 Basically: Tom & Jerry."],["😂","Funny Gift","Aap ko tang karna aur mazaak karna bhi gift ka ek part hai 😂"],["🤲","Dua","Allah aap ko hamesha khush rakhe, har mushkil asaan kare aur har achi dua qabool kare. Ameen. 🤍"],["💌","Secret Message","Ek gift aisa bhi hai jo box mein fit nahi hota... saari achi duaein. ✨"]];
+gifts.forEach(g=>{let e=document.createElement("div");e.className="item";e.innerHTML="<span>"+g[0]+"</span><b>"+g[1]+"</b><small>Open 🎁</small>";e.onclick=()=>{e.classList.add("open");e.innerHTML="<span>"+g[0]+"</span><b>"+g[1]+"</b><p>"+g[2]+"</p>"};$("giftBox").appendChild(e)})
+}
+</script>
+</body>
+</html>
